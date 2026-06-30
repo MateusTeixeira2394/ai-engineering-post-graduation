@@ -1,0 +1,8 @@
+# Dependencies
+node_modules/
+
+# Saved model artifacts
+saved-model/
+
+# macOS
+.DS_Store
