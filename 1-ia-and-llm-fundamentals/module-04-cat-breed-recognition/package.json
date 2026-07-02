@@ -1,0 +1,22 @@
+{
+  "name": "module-04-cat-breed-recognition",
+  "version": "1.0.0",
+  "main": "app/index.js",
+  "scripts": {
+    "start": "node app/index.js",
+    "train": "node app/train.js",
+    "predict": "node app/predict.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=18 <23"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Convolutional neural network that classifies cat breeds from images using TensorFlow.js (Node).",
+  "dependencies": {
+    "@tensorflow-models/mobilenet": "^2.1.1",
+    "@tensorflow/tfjs-node": "^4.22.0"
+  }
+}
