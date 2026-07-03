@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web AI — Question Answering (Transformers.js)</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+        font-family: system-ui, -apple-system, sans-serif;
+      }
+      body {
+        max-width: 720px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+        line-height: 1.5;
+      }
+      h1 {
+        font-size: 1.4rem;
+      }
+      label {
+        display: block;
+        font-weight: 600;
+        margin: 1rem 0 0.25rem;
+      }
+      textarea,
+      input {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0.5rem;
+        font: inherit;
+        border: 1px solid #8888;
+        border-radius: 6px;
+        background: transparent;
+        color: inherit;
+      }
+      button {
+        margin-top: 1rem;
+        padding: 0.6rem 1.2rem;
+        font: inherit;
+        font-weight: 600;
+        border: none;
+        border-radius: 6px;
+        background: #4f46e5;
+        color: #fff;
+        cursor: pointer;
+      }
+      button:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      #status {
+        margin-top: 1rem;
+        font-size: 0.9rem;
+        opacity: 0.8;
+      }
+      #output {
+        margin-top: 1rem;
+        padding: 1rem;
+        border-radius: 6px;
+        background: #8881;
+        white-space: pre-wrap;
+        min-height: 1.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Question Answering in the browser</h1>
+    <p>
+      Runs <code>Xenova/distilbert-base-cased-distilled-squad</code> entirely
+      client-side via
+      <a href="https://huggingface.co/docs/transformers.js">Transformers.js</a>.
+      The model (~65&nbsp;MB) downloads once and is cached by the browser.
+    </p>
+
+    <label for="context">Context</label>
+    <textarea id="context" rows="7">
+Once upon a time, there were three little pigs who left home to build their own houses. The first pig built his house out of straw because it was the easiest thing to do. The second pig built his house out of sticks, which was a little sturdier. The third pig built his house out of bricks, working hard for many days. One day a big bad wolf came along. He huffed and puffed and blew down the house of straw, and then the house of sticks. But no matter how hard he blew, he could not blow down the house of bricks. In the end, the three pigs were safe inside the brick house, and the wolf gave up and ran away.</textarea>
+
+    <label for="question">Question</label>
+    <input id="question" value="What did the third pig build his house out of?" />
+
+    <button id="run" disabled>Loading model…</button>
+
+    <div id="status"></div>
+    <div id="output"></div>
+
+    <script type="module">
+      import { pipeline } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers';
+
+      const runBtn = document.getElementById('run');
+      const statusEl = document.getElementById('status');
+      const outputEl = document.getElementById('output');
+
+      const setStatus = (msg) => (statusEl.textContent = msg);
+
+      // Load the pipeline once, reporting download progress.
+      setStatus('Downloading model…');
+      const answerer = await pipeline(
+        'question-answering',
+        'Xenova/distilbert-base-cased-distilled-squad',
+        {
+          progress_callback: (p) => {
+            if (p.status === 'progress') {
+              setStatus(`Downloading ${p.file}: ${Math.round(p.progress)}%`);
+            }
+          },
+        }
+      );
+
+      setStatus('Model ready.');
+      runBtn.textContent = 'Answer';
+      runBtn.disabled = false;
+
+      runBtn.addEventListener('click', async () => {
+        const question = document.getElementById('question').value.trim();
+        const context = document.getElementById('context').value.trim();
+        if (!question || !context) return;
+
+        runBtn.disabled = true;
+        setStatus('Thinking…');
+        outputEl.textContent = '';
+
+        const output = await answerer(question, context);
+
+        setStatus('Done.');
+        outputEl.textContent = `Answer: ${output.answer}\nScore:  ${output.score.toFixed(4)}`;
+        console.log(output);
+        runBtn.disabled = false;
+      });
+    </script>
+  </body>
+</html>

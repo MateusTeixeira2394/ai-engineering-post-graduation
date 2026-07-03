@@ -1,0 +1,12 @@
+{
+  "name": "web-ai-llm",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "serve": "npx --yes serve ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "Browser-side question answering with Transformers.js (loaded from CDN)."
+}
