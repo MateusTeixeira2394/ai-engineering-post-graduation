@@ -1,0 +1,8 @@
+[    2233ms] [ERROR] Failed to load brand theme: Error: Cannot find module './globalThemeLogin.svg'
+    at https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:1:20249 @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2237ms] [WARNING] [react-gtm] GTM Id is required @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2239ms] [WARNING] [react-gtm] GTM Id is required @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2244ms] [WARNING] [react-gtm] GTM Id is required @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2365ms] [WARNING] [react-gtm] GTM Id is required @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2371ms] [WARNING] [react-gtm] GTM Id is required @ https://infoprod.platosedu.io/v2/lms/_next/static/chunks/pages/login-6dd31ecd6258947f.js:0
+[    2483ms] [VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password"): (More info: https://goo.gl/9p2vKq) %o @ https://infoprod.platosedu.io/v2/lms/login:0
