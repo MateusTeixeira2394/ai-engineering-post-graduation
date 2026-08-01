@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    // Node 24 runs .ts directly by stripping types — tsc is only used for checking.
+    "module": "nodenext",
+    "moduleResolution": "nodenext",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "types": ["node"],
+
+    // Only allow syntax Node's type-stripping can erase (no enum/namespace/param-props).
+    "erasableSyntaxOnly": true,
+    "verbatimModuleSyntax": true,
+
+    // Type-check only; Node executes the source, tsc never emits.
+    "noEmit": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "allowImportingTsExtensions": true
+  },
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

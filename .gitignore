@@ -6,3 +6,12 @@ saved-model/
 
 # macOS
 .DS_Store
+
+# Environment variables
+.env
+./*.env
+
+# Playwright test artifacts
+.playwright-mcp
+
+**/assets/pdfs/

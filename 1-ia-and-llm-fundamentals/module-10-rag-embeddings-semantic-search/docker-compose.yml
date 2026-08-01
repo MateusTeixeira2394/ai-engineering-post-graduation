@@ -1,0 +1,29 @@
+services:
+  neo4j:
+    image: neo4j:5-community
+    container_name: module-10-neo4j
+    restart: unless-stopped
+    ports:
+      - "7474:7474"   # HTTP Browser UI
+      - "7687:7687"   # Bolt (driver connections)
+    environment:
+      # Auth is "user/password"; sourced from .env
+      NEO4J_AUTH: "${NEO4J_USER}/${NEO4J_PASSWORD}"
+      # Vector indexes live in APOC/GDS-free core in Neo4j 5, but enable APOC for convenience
+      NEO4J_PLUGINS: '["apoc"]'
+      NEO4J_apoc_export_file_enabled: "true"
+      NEO4J_apoc_import_file_enabled: "true"
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      # Confirms Bolt is actually accepting authenticated queries, not just that the port is open
+      test: ["CMD-SHELL", "cypher-shell -u \"$NEO4J_USER\" -p \"$NEO4J_PASSWORD\" 'RETURN 1' || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+      start_period: 30s
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
