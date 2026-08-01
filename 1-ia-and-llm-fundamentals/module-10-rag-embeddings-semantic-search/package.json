@@ -8,6 +8,7 @@
   "main": "index.ts",
   "scripts": {
     "start": "node --env-file .env src/index.ts",
+    "start:no-seed": "node --watch --env-file .env src/index.ts --no-seed",
     "typecheck": "tsc --noEmit",
     "db:up": "docker compose up -d",
     "db:down": "docker compose down",
