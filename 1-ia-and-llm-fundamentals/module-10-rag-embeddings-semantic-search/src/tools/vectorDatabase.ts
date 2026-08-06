@@ -74,4 +74,16 @@ export class VectorDatabase {
             return [];
         }
     }
+
+    async searchSimilarDocumentsWithScores(query: string, topK: number): Promise<{ document: Document; score: number }[]> {
+        console.log(`🛢 Searching the ${topK} chunks most similar to: "${query}" with scores...`);
+        try {
+            const results = await this.vectorStore.similaritySearchWithScore(query, topK);
+            console.log(`🛢 Found ${results.length} similar chunks.`);
+            return results.map(([document, score]) => ({ document: toDocument(document), score }));
+        } catch (error) {
+            console.error(`🛢 Failed to search similar documents with scores:`, error);
+            return [];
+        }
+    }
 }

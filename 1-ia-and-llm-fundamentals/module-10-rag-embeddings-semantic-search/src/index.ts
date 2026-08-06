@@ -4,6 +4,7 @@ import { HuggingFaceTransformersEmbeddings } from "@langchain/community/embeddin
 import type { PretrainedOptions } from "@huggingface/transformers";
 import { Neo4jVectorStore } from "@langchain/community/vectorstores/neo4j_vector";
 import { VectorDatabase } from "./tools/vectorDatabase.ts";
+import { AI } from "./tools/ai.ts";
 
 // `--no-seed` reuses whatever is already stored in Neo4j: no PDF parsing, no
 // wipe, no re-embedding.
@@ -12,6 +13,7 @@ const shouldSeed = !process.argv.includes("--no-seed");
 try {
     console.log("Starting the Embedding system with Neo4j...");
 
+    // Load the embedding model
     const embeddings = new HuggingFaceTransformersEmbeddings({
         model: CONFIG.embedding.model,
         // LangChain types this as PretrainedOptions but forwards it straight to
@@ -19,8 +21,13 @@ try {
         pretrainedOptions: CONFIG.embedding.pretrainedOptions as PretrainedOptions,
     });
 
-    const vectorDatabase = new VectorDatabase(await Neo4jVectorStore.fromExistingGraph(embeddings, CONFIG.neo4j));
+    // Load the vector store
+    const vectorStore = await Neo4jVectorStore.fromExistingGraph(embeddings, CONFIG.neo4j);
 
+    // Load the vector database
+    const vectorDatabase = new VectorDatabase(vectorStore);
+
+    // Seed the database if needed
     if (shouldSeed) {
         const documentProcessor = new DocumentProcessor(
             CONFIG.pdf.path,
@@ -36,16 +43,12 @@ try {
         console.log("🛢 Skipping seeding (--no-seed): reusing the existing Neo4j data.");
     }
 
-    const question = "Why the rabbit was late to the party?";
+    // After the database is seeded, resume the application
 
-    const results = await vectorDatabase.searchSimilarDocuments(question, CONFIG.similarity.topK);
+    const question = "Why does Alice follow the White Rabbit down the rabbit hole?";
 
-    results.forEach((doc, index) => {
-        console.log(`\n📌 Result ${index + 1}:`);
-        console.log(`Page Number: ${doc.metadata.pageNumber}`);
-        console.log(`Chunk Position: ${doc.metadata.chunkPosition}`);
-        console.log(`Content: ${doc.pageContent}`);
-    });
+    const ai = new AI(vectorDatabase);
+    const answer = await ai.answerQuestion(question);
 
 } catch (error) {
     console.error("An error occurred:", error);

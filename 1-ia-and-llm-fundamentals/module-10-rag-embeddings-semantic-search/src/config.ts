@@ -19,7 +19,7 @@ export const CONFIG = Object.freeze({
         nodeLabel: "Chunk",
     },
     openRouter: {
-        nlpModel: process.env.NLP_MODEL,
+        llmModel: process.env.LLM_MODEL,
         url: "https://openrouter.ai/api/v1",
         apiKey: process.env.OPENROUTER_API_KEY,
         temperature: - 0.3,
@@ -47,5 +47,6 @@ export const CONFIG = Object.freeze({
     },
     similarity: {
         topK: 3,
+        threshold: 0.7,
     }
 });
