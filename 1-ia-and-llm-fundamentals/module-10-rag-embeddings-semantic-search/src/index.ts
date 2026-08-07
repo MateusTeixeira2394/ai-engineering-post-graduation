@@ -50,6 +50,9 @@ try {
     const ai = new AI(vectorDatabase);
     const answer = await ai.answerQuestion(question);
 
+    console.log(`\nQuestion: ${question}`);
+    console.log(`\nAnswer: ${answer}`);
+
 } catch (error) {
     console.error("An error occurred:", error);
 }

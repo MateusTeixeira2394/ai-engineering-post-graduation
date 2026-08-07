@@ -1,4 +1,6 @@
+import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
+import { promptsFiles, type AnswerPrompt } from "./prompts/promptConfig.ts";
 
 // Anchor relative paths to the module root so they don't depend on the caller's cwd.
 const MODULE_ROOT = resolve(import.meta.dirname, "..");
@@ -9,6 +11,10 @@ export interface TextSplitterConfig {
 }
 
 export const CONFIG = Object.freeze({
+    answerPrompt: JSON.parse(
+        readFileSync(promptsFiles.answerPrompt, 'utf-8')
+    ) as AnswerPrompt,
+    templateText: readFileSync(promptsFiles.template, 'utf-8'),
     neo4j: {
         url: process.env.NEO4J_URI!,
         username: process.env.NEO4J_USER!,
