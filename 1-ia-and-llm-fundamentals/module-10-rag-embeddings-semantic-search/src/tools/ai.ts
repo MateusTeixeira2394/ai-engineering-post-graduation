@@ -80,6 +80,8 @@ export class AI {
     }
 
     private async generateLLMResponse(input: ChainState): Promise<ChainState> {
+        console.log(`\n🤖 Generating response from LLM for the question: "${input.question}"...`);
+        console.log('\n🤖 Thinking...');
         if (input.error || !input.context) {
             return input;
         }
