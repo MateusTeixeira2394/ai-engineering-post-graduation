@@ -28,7 +28,7 @@ export const CONFIG = Object.freeze({
         llmModel: process.env.LLM_MODEL,
         url: "https://openrouter.ai/api/v1",
         apiKey: process.env.OPENROUTER_API_KEY,
-        temperature: - 0.3,
+        temperature: 0.5,
         maxRetries: 2,
         defaultHeaders: {
             "HTTP-Referer": process.env.OPENROUTER_SITE_URL,

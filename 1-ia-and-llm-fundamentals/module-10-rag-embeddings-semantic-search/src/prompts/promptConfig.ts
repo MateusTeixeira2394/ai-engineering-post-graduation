@@ -1,7 +1,10 @@
-const promptsFolder = './prompts';
+import { resolve } from "node:path";
+
+// Anchor to this file's folder so the prompts resolve regardless of the caller's cwd.
+const promptsFolder = import.meta.dirname;
 export const promptsFiles = {
-    answerPrompt: `${promptsFolder}/answerPrompt.json`,
-    template: `${promptsFolder}/template.txt`,
+    answerPrompt: resolve(promptsFolder, 'answerPrompt.json'),
+    template: resolve(promptsFolder, 'template.txt'),
 };
 
 export type AnswerPromptExample = {
