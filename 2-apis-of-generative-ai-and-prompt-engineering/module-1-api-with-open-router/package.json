@@ -1,0 +1,17 @@
+{
+  "name": "module-1-api-with-open-router",
+  "version": "1.0.0",
+  "description": "API wrapped with ai using Open Router",
+  "license": "ISC",
+  "author": "Mateus Teixeira",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node --env-file .env --inspect --watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@openrouter/sdk": "^1.2.42",
+    "fastify": "^5.12.0"
+  }
+}
