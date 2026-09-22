@@ -1,0 +1,25 @@
+{
+  "name": "module-2-langgraph-intro",
+  "version": "1.0.0",
+  "description": "A small, didactic LangGraph server: a three-node graph that answers in the same casing you asked in",
+  "license": "ISC",
+  "author": "Mateus Teixeira",
+  "type": "module",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "node --env-file .env --inspect --watch src/index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@langchain/core": "^1.2.12",
+    "@langchain/langgraph": "^1.4.17",
+    "@langchain/openai": "^1.5.13",
+    "fastify": "^5.12.5",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.2",
+    "typescript": "^7.0.2"
+  }
+}
